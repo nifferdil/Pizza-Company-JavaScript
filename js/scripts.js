@@ -9,9 +9,9 @@ function Pizza(toppings, pizzaName, size) {
   this.size = size;
 }
 
-Pizza.prototype.cost = function() {
-  return this.size + this.extraToppings + this.price * quantity;
-}
+// Pizza.prototype.cost = function() {
+//   return this.size + this.extraToppings + this.price * quantity;
+// }
 
 var appendPizza = function(pizza) {
   var text = "<li class='col-md-4'><div><center><h3>" + pizza.pizzaName + "</h3>";
@@ -42,7 +42,7 @@ $(document).ready(function() {
   var totalPurchase = 0;
   $("#purchased").hide();
 
-  var classic = new Pizza (["tomatoes", "basil", "onions"], "Classic", ["small", "medium", "large"]);
+  var classic = new Pizza (["tomatoes", "onions"], "Classic", ["small", "medium", "large"]);
   var meat = new Pizza (["sausage", "mushrooms", "olives"], "Meat Lovers", ["small", "medium", "large"]);
   var veggie = new Pizza (["olives", "peppers", "onions", "mushrooms"], "Veggie", ["small", "medium", "large"]);
   var chickenPesto = new Pizza (["chicken", "pesto"], "Chicken Pesto", ["small", "medium", "large"]);
@@ -58,6 +58,20 @@ $(document).ready(function() {
   for (var i in pizzaChoices){
     appendPizza(pizzaChoices[i]);
   }
+
+  $('#toppings').change(function() {
+    $('.toppings, .topping_price').empty();
+    var sum = 0,
+        price;
+    $(this).find('option:selected').each(function() {
+        if ($(this).attr('data-price')) {
+            price = $(this).data('price');
+            sum += price;
+            $('.toppings').text(price);
+        }
+    });
+    $('.topping_price').text(sum);
+});
 
   $(".size").click(function(){
     var sizeChoice = parseInt($(this).val());
@@ -89,7 +103,7 @@ $(document).ready(function() {
   });
 
   $( ".large_pizza" ).keyup(function() {
-    var numOfTickets = parseInt($("input.large_pizza").val());
+    var numOfPizzas = parseInt($("input.large_pizza").val());
     largeResult = getTotal(numOfPizzas, largePrice);
     var largeResultText = "$ " + largeResult + ".00";
 
@@ -108,6 +122,7 @@ $(document).ready(function() {
     $(".small_price").empty();
     $(".medium_price").empty();
     $(".large_price").empty();
+    $(".topping_price").empty();
     $(".totalPurchase").empty();
     $("#buyPizza").show();
     $("#purchased").hide();
