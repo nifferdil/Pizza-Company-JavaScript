@@ -1,7 +1,7 @@
 var smallPrice;
 var mediumPrice;
 var largePrice;
-var extraToppings;
+var extraToppingsPrice;
 
 function Pizza(toppings, pizzaName, size) {
   this.toppings = toppings;
@@ -24,7 +24,7 @@ var setPizzaPrices = function() {
   smallPrice = 11;
   mediumPrice = 15;
   largePrice = 18;
-  extraToppings = 1;
+  extraToppingsPrice = 1;
 };
 
 var getTotal = function(quantity, price){
@@ -61,7 +61,7 @@ $(document).ready(function() {
   }
 
   $('#toppings').change(function() {
-    $('.toppings, .topping_price').empty();
+    //$('.topping_price').empty();
     var sum = 0,
     price;
     $(this).find('option:selected').each(function() {
@@ -69,11 +69,9 @@ $(document).ready(function() {
         price = $(this).data('price');
         sum += price;
 
-        toppingsResult = getTotal(price, extraToppings);
-        var toppingResultText = "$ " + extraToppings;
-        $('.toppings').text(toppingResultText);
+        toppingsResult = getTotal(sum, extraToppingsPrice);
         $(".topping_price").text("$ " + sum + ".00");
-        totalPurchase = totalPrice(smallResult, mediumResult, largeResult, sum);
+        totalPurchase = totalPrice(smallResult, mediumResult, largeResult, toppingsResult);
         $(".total_price").text(totalPurchase);
       }
     });
@@ -86,7 +84,7 @@ $(document).ready(function() {
     $(".small").text(smallPrice);
     $(".medium").text(mediumPrice);
     $(".large").text(largePrice);
-    $(".toppings").text(extraToppings);
+    $(".topping").text(extraToppingsPrice);
 
   });
 
@@ -96,7 +94,7 @@ $(document).ready(function() {
     var smallResultText = "$ " + smallResult + ".00";
 
     $(".small_price").text(smallResultText);
-    totalPurchase = totalPrice(smallResult, mediumResult, largeResult);
+    totalPurchase = totalPrice(smallResult, mediumResult, largeResult, toppingsResult);
     $(".total_price").text(totalPurchase);
   });
 
@@ -106,7 +104,7 @@ $(document).ready(function() {
     var mediumResultText = "$ " + mediumResult + ".00";
 
     $(".medium_price").text(mediumResultText);
-    totalPurchase = totalPrice(smallResult, mediumResult, largeResult);
+    totalPurchase = totalPrice(smallResult, mediumResult, largeResult, toppingsResult);
     $(".total_price").text(totalPurchase);
   });
 
@@ -116,7 +114,7 @@ $(document).ready(function() {
     var largeResultText = "$ " + largeResult + ".00";
 
     $(".large_price").text(largeResultText);
-    totalPurchase = totalPrice(smallResult, mediumResult, largeResult);
+    totalPurchase = totalPrice(smallResult, mediumResult, largeResult, toppingsResult);
     $(".total_price").text(totalPurchase);
   });
 
@@ -140,10 +138,11 @@ $(document).ready(function() {
     smallResult = 0;
     mediumResult = 0;
     largeResult = 0;
+    toppingsResult = 0;
   });
 
   var thankYouMessage = new Pizza("cheese", "classic", "large");
   thankYouMessage = thankYouMessage.thankYou();
-    $("#thanks").text(thankYouMessage);
+  $("#thanks").text(thankYouMessage);
 
 }); // end of document
