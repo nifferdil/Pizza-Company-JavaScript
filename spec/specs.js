@@ -14,3 +14,17 @@ describe('thankYou', function() {
     expect(testPizza).to.equal("Thank you for ordering with us!");
   });
 });
+
+describe('getTotal', function() {
+  it("assigns price for each pizza order per size", function() {
+    var test = getTotal(2, 11);
+    expect(test).to.equal(22);
+  });
+});
+
+describe('totalPrice', function() {
+  it("calculate price for each pizza order for all sizes", function() {
+    var test = totalPrice(2, 1, 0, 0);
+    expect(test).to.equal(3);
+  });
+});

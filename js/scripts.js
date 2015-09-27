@@ -14,7 +14,8 @@ Pizza.prototype.thankYou = function() {
 }
 
 var appendPizza = function(pizza) {
-  var text = "<li class='col-md-4'><div><center><h3>" + pizza.pizzaName + "</h3>";
+  var text = "<li class='col-md-4'><div><center><h3>" + pizza.pizzaName + ": " + "</h3>";
+  text += "<p>" + pizza.toppings + "</p>";
   text += "<button class='size btn btn-danger' value='" + "' data-toggle='modal' data-target='#frontModal'>" + "Choose Your Size" + "</button>";
   text += "</center></div></li>";
   $("ul#pizzaChoices").append(text);
@@ -43,17 +44,19 @@ $(document).ready(function() {
   var totalPurchase = 0;
   $("#purchased").hide();
 
-  var classic = new Pizza (["tomatoes", "onions"], "Classic", ["small", "medium", "large"]);
-  var meat = new Pizza (["sausage", "mushrooms", "olives"], "Meat Lovers", ["small", "medium", "large"]);
-  var veggie = new Pizza (["olives", "peppers", "onions", "mushrooms"], "Veggie", ["small", "medium", "large"]);
-  var chickenPesto = new Pizza (["chicken", "pesto"], "Chicken Pesto", ["small", "medium", "large"]);
-  var supreme = new Pizza (["pepperoni", "sausage", "olives", "peppers"], "Supreme",  ["small", "medium", "large"]);
+  var classic = new Pizza (["tomatoes", " onions"], "Classic", ["small", "medium", "large"]);
+  var meat = new Pizza (["sausage", " mushrooms", " olives"], "Meat Lovers", ["small", "medium", "large"]);
+  var veggie = new Pizza (["olives", " peppers", " onions", " mushrooms"], "Veggie", ["small", "medium", "large"]);
+  var chickenPesto = new Pizza (["chicken", " pesto"], "Chicken Pesto", ["small", "medium", "large"]);
+  var bbqChicken = new Pizza (["chicken", " red onions", " cilantro"], "BBQ Chicken", ["small", "medium", "large"]);
+  var supreme = new Pizza (["pepperoni", " sausage", " olives", " peppers"], "Supreme",  ["small", "medium", "large"]);
 
   var pizzaChoices = [];
   pizzaChoices.push(classic);
   pizzaChoices.push(meat);
   pizzaChoices.push(veggie);
   pizzaChoices.push(chickenPesto);
+  pizzaChoices.push(bbqChicken);
   pizzaChoices.push(supreme);
 
   for (var i in pizzaChoices){
@@ -85,11 +88,10 @@ $(document).ready(function() {
     $(".medium").text(mediumPrice);
     $(".large").text(largePrice);
     $(".topping").text(extraToppingsPrice);
-
   });
 
   $( ".small_pizza" ).keyup(function() {
-    var numOfPizzas = parseInt($("input.small_pizza").val());
+    var numOfPizzas = ($("input.small_pizza").val());
     smallResult = getTotal(numOfPizzas, smallPrice);
     var smallResultText = "$ " + smallResult + ".00";
 
@@ -135,6 +137,7 @@ $(document).ready(function() {
     $("input.small_pizza").val("");
     $("input.medium_pizza").val("");
     $("input.large_pizza").val("");
+    $("#toppings").val("");
     smallResult = 0;
     mediumResult = 0;
     largeResult = 0;
